@@ -4,6 +4,7 @@ PATH
     et_test_helpers (0.1.0)
       activesupport (~> 6.0)
       capybara (~> 3.32)
+      i18n (~> 1.8)
       site_prism (~> 3.4)
 
 GEM

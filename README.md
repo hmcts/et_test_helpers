@@ -83,7 +83,7 @@ Put this somewhere that executes before any tests are run
 
 ```ruby
 EtTestHelpers.configure do |c|
-  c.translate = -> key { MyI18nLibrary.t(key) }
+  c.translate = ->(key) { MyI18nLibrary.t(key) }
 end
 ```
 

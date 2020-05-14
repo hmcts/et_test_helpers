@@ -29,4 +29,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "capybara", "~> 3.32"
   spec.add_dependency "activesupport", "~> 6.0"
   spec.add_dependency "site_prism", "~> 3.4"
+  spec.add_dependency "i18n", "~> 1.8"
 end

@@ -3,7 +3,21 @@ require "active_support/core_ext/string"
 require "et_test_helpers/capybara"
 require "et_test_helpers/components"
 require "et_test_helpers/page"
+require "et_test_helpers/config"
 module EtTestHelpers
-  class Error < StandardError; end
-  # Your code goes here...
+  def self.normalize_locator(locator)
+    return locator unless locator.is_a?(Symbol)
+
+    translation.call(locator)
+  end
+
+  def self.config
+    Config.instance
+  end
+
+  def self.translation
+    config.translation
+  end
+
+
 end
