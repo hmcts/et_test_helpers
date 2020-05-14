@@ -3,7 +3,11 @@ RSpec.describe EtTestHelpers do
     expect(EtTestHelpers::VERSION).not_to be nil
   end
 
-  it "does something useful" do
-    expect(false).to eq(true)
+  it "can configure the translate option" do
+    EtTestHelpers.configure do |c|
+      c.translate = key -> { "#{key}-translated" }
+    end
+
+    boom!
   end
 end
