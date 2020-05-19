@@ -11,10 +11,11 @@ module EtTestHelpers
       # @param [String,Symbol] type - The type of component eg :text_field
       # @return [::EtTestHelpers::Components::GovUKTextField] - This can be many types
       def govuk_component(type)
-        klass = "::EtTestHelpers::Components::GovUK#{type.to_s.camelize}".safe_constantize
+        klass_name = "::EtTestHelpers::Components::GovUK#{type.to_s.camelize}"
+        klass = klass_name.safe_constantize
         return klass unless klass.nil?
 
-        raise "Unknown govuk_component with a type of '#{type}'"
+        raise "Unknown govuk_component with a type of '#{type}' - it should be defined as '#{klass_name}'"
       end
     end
   end
