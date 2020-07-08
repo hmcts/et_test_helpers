@@ -24,7 +24,7 @@ module EtTestHelpers
 
       def set(value)
         value = EtTestHelpers.normalize_locator(value)
-        input.find(:option, text: value).select_option
+        input.find(:xpath, XPath.generate {|x| x.child(:option)[x.string.n.equals(value)]}).select_option
       end
     end
   end

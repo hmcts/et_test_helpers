@@ -14,7 +14,7 @@ module EtTestHelpers
 
         # @!method input
         # @return [Capybara::Node::Element] The input element
-        element :input, :govuk_field_input
+        elements :inputs, :govuk_field_input
 
         # @!method error
         # @return [::SitePrism::Section] The label section - note that all errors have a hidden (1px x 1px prefix containing 'Error:' - this section filters that out)
@@ -23,9 +23,22 @@ module EtTestHelpers
             root_element.text.gsub(/Error:\n/, '')
           end
         end
+
+        def set(date)
+          if date.is_a?(String)
+            parts = date.split('/')
+            inputs[0].set(parts[0])
+            inputs[1].set(parts[1])
+            inputs[2].set(parts[2])
+          else
+            inputs[0].set(date.day)
+            inputs[1].set(date.month)
+            inputs[2].set(date.year)
+          end
+        end
       end
 
-      delegate [:label, :hint, :error, :has_no_error?, :has_no_hint?] => :fieldset
+      delegate [:set, :label, :hint, :error, :has_no_error?, :has_no_hint?] => :fieldset
     end
   end
 end

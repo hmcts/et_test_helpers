@@ -22,8 +22,12 @@ module EtTestHelpers
             root_element.text.gsub(/Error:\n/, '')
           end
         end
+
+        def set(value)
+          raise 'Not yet implemented'
+        end
       end
-      delegate [:label, :hint, :error, :has_no_error?, :has_no_hint?] => :fieldset
+      delegate [:set, :label, :hint, :error, :has_no_error?, :has_no_hint?] => :fieldset
     end
   end
 end

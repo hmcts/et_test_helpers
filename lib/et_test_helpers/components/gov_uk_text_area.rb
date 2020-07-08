@@ -21,6 +21,10 @@ module EtTestHelpers
           root_element.text.gsub(/Error:\n/, '')
         end
       end
+
+      def set(value)
+        raise 'Not yet implemented'
+      end
     end
   end
 end
