@@ -22,8 +22,29 @@ module EtTestHelpers
             root_element.text.gsub(/Error:\n/, '')
           end
         end
+
+        def set(value)
+          option(value).select
+        end
+
+        private
+
+        def option(value)
+          Option.new self, find(:govuk_radio_button, value)
+        end
       end
-      delegate [:label, :hint, :error, :has_no_error?, :has_no_hint?] => :fieldset
+      delegate [:set, :label, :hint, :error, :has_no_error?, :has_no_hint?] => :fieldset
+
+      class Option < ::SitePrism::Section
+        def select
+          label.click
+        end
+
+        private
+
+        element :label, :css, 'label'
+        element :input, :css, 'input', visible: false
+      end
     end
   end
 end
