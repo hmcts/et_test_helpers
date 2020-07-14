@@ -23,7 +23,11 @@ module EtTestHelpers
       end
 
       def set(value)
-        raise 'Not yet implemented'
+        input.set(value)
+      end
+
+      def value
+        input.value
       end
     end
   end
