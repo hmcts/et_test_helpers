@@ -12,8 +12,8 @@ module EtTestHelpers
         element :hint, :govuk_field_hint
 
         # @!method input
-        # @return [Capybara::Node::Element] The input element
-        element :input, :govuk_field_input
+        # @return [GovUKCheckbox] The checkbox elements
+        sections :checkboxes, GovUKCheckbox, '.govuk-checkboxes__item'
 
         # @!method error
         # @return [::SitePrism::Section] The label section - note that all errors have a hidden (1px x 1px prefix containing 'Error:' - this section filters that out)
@@ -23,8 +23,23 @@ module EtTestHelpers
           end
         end
 
-        def set(value)
-          raise 'Not yet implemented'
+        def set(values)
+          return if values.nil?
+
+          values = Array(values)
+          checkboxes.each do |checkbox|
+            checkbox.set(values.include?(checkbox.label.text))
+          end
+        end
+
+        def value
+          checkboxes.select(&:checked?).map(&:label).map(&:text)
+        end
+
+        private
+
+        def checkbox(value)
+          GovUKCheckbox.new self, find(:govuk_checkbox, value)
         end
       end
       delegate [:set, :label, :hint, :error, :has_no_error?, :has_no_hint?] => :fieldset
