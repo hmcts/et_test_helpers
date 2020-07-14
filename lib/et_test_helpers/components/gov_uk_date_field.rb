@@ -36,9 +36,16 @@ module EtTestHelpers
             inputs[2].set(date.year)
           end
         end
+
+        def value
+          ymd = inputs[0..2].map(&:value).map(&:to_i).reverse
+          Date.new(*ymd)
+        rescue ArgumentError
+          nil
+        end
       end
 
-      delegate [:set, :label, :hint, :error, :has_no_error?, :has_no_hint?] => :fieldset
+      delegate [:set, :value, :label, :hint, :error, :has_no_error?, :has_no_hint?] => :fieldset
     end
   end
 end
