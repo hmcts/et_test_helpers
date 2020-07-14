@@ -28,7 +28,7 @@ module EtTestHelpers
         end
 
         def value
-          input_id = find('input[type=radio]', selected: true)[:id]
+          input_id = find(:xpath, XPath.generate {|x| x.descendant(:input)[x.attr(:type).equals('radio') & x.attr(:selected).equals('true')]})[:id]
           find("label[for=#{input_id}").text
         end
 
