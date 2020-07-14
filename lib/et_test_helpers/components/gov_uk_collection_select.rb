@@ -26,6 +26,13 @@ module EtTestHelpers
         value = EtTestHelpers.normalize_locator(value)
         input.find(:xpath, XPath.generate {|x| x.child(:option)[x.string.n.equals(value)]}).select_option
       end
+
+      def value
+        system_value = input[:value]
+        return nil if system_value.nil?
+
+        input.find(:xpath, XPath.generate {|x| x.child(:option)[x.attr(:value).equals(system_value)]}).text
+      end
     end
   end
 end
