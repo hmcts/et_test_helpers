@@ -25,6 +25,10 @@ module EtTestHelpers
       def checked?
         input.checked?
       end
+
+      def set(value)
+        input.set(value)
+      end
     end
   end
 end
