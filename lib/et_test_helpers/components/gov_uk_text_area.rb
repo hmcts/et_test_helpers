@@ -12,7 +12,7 @@ module EtTestHelpers
 
       # @!method input
       # @return [Capybara::Node::Element] The input element
-      element :input, :govuk_text_area
+      element :input, 'textarea'
 
       # @!method error
       # @return [::SitePrism::Section] The label section - note that all errors have a hidden (1px x 1px prefix containing 'Error:' - this section filters that out)
