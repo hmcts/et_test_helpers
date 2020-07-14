@@ -25,6 +25,10 @@ module EtTestHelpers
       def set(value)
         input.set(value)
       end
+
+      def value
+        input.value
+      end
     end
   end
 end
