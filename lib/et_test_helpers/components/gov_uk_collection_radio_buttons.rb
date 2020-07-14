@@ -27,13 +27,19 @@ module EtTestHelpers
           option(value).select
         end
 
+        def value
+          input_id = find('input[type=radio]', selected: true)[:id]
+          find("label[for=#{input_id}").text
+        end
+
         private
 
         def option(value)
           Option.new self, find(:govuk_radio_button, value)
         end
+
       end
-      delegate [:set, :label, :hint, :error, :has_no_error?, :has_no_hint?] => :fieldset
+      delegate [:set, :value, :label, :hint, :error, :has_no_error?, :has_no_hint?] => :fieldset
 
       class Option < ::SitePrism::Section
         def select
