@@ -24,6 +24,7 @@ module EtTestHelpers
         end
 
         def set(value)
+          return if value.nil? # We cannot unset radio buttons so nil has no meaning apart from do nothing
           option(value).select
         end
 
