@@ -29,7 +29,7 @@ module EtTestHelpers
 
         def assert_value(expected_value)
           # @TODO We should do this in a way for the values to be correct - this is not ideal
-          value.sort == expected_value.sort
+          raise Capybara::ExpectationNotMet unless value.sort == expected_value.sort
         end
 
         def set(values)
