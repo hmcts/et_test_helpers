@@ -27,8 +27,9 @@ module EtTestHelpers
           find(:govuk_field_error, text: error)
         end
 
-        def assert_value(value)
-          checkboxes(:checked).map(:value).sort == value.sort
+        def assert_value(expected_value)
+          # @TODO We should do this in a way for the values to be correct - this is not ideal
+          value.sort == expected_value.sort
         end
 
         def set(values)
