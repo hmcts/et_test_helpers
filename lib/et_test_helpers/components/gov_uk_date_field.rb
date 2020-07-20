@@ -31,7 +31,7 @@ module EtTestHelpers
         def assert_value(expected_value)
           dt = if expected_value.is_a?(String)
                  Date.parse(expected_value)
-               elsif date.nil?
+               elsif expected_value.nil?
                  nil
                else
                  expected_value
