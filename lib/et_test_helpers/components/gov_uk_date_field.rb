@@ -28,6 +28,17 @@ module EtTestHelpers
           find(:govuk_field_error, text: error)
         end
 
+        def assert_value(expected_value)
+          dt = if expected_value.is_a?(String)
+                 Date.parse(expected_value)
+               elsif date.nil?
+                 nil
+               else
+                 expected_value
+               end
+          raise Capybara::ExpectationNotMet unless dt == value
+        end
+
         def set(date)
           if date.is_a?(String)
             parts = date.split('/')
@@ -53,7 +64,7 @@ module EtTestHelpers
         end
       end
 
-      delegate [:assert_error_message, :set, :value, :label, :hint, :error, :has_no_error?, :has_no_hint?] => :fieldset
+      delegate [:assert_value, :assert_error_message, :set, :value, :label, :hint, :error, :has_no_error?, :has_no_hint?] => :fieldset
     end
   end
 end
