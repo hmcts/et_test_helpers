@@ -26,6 +26,10 @@ module EtTestHelpers
         find(:govuk_field_error, text: error)
       end
 
+      def assert_value(value)
+        input with: value
+      end
+
       def set(value)
         input.set(value)
       end
