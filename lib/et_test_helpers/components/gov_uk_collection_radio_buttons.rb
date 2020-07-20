@@ -44,7 +44,7 @@ module EtTestHelpers
         end
 
       end
-      delegate [:set, :value, :label, :hint, :error, :has_no_error?, :has_no_hint?] => :fieldset
+      delegate [:assert_error_message, :set, :value, :label, :hint, :error, :has_no_error?, :has_no_hint?] => :fieldset
 
       class Option < ::SitePrism::Section
         def select
