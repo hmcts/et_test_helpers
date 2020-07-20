@@ -27,6 +27,10 @@ module EtTestHelpers
           find(:govuk_field_error, text: error)
         end
 
+        def assert_value(value)
+          checkboxes(:checked).map(:value).sort == value.sort
+        end
+
         def set(values)
           return if values.nil?
 
