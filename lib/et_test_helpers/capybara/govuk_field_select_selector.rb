@@ -14,4 +14,12 @@ Capybara.add_selector(:govuk_field_select) do
   describe_node_filters do |**options|
     " with #{selected.inspect} selected" if selected
   end
+
+  def options_text(node, **opts, &filter_block)
+    opts[:wait] = false
+    opts[:visible] = false unless node.visible?
+    node.all(:xpath, './/option', **opts, &filter_block).map do |o|
+      o.text((:all if opts[:visible] == false))
+    end
+  end
 end
