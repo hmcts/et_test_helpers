@@ -23,6 +23,10 @@ module EtTestHelpers
           end
         end
 
+        def assert_error_message(error)
+          find(:govuk_field_error, text: error)
+        end
+
         def set(value)
           return if value.nil? # We cannot unset radio buttons so nil has no meaning apart from do nothing
           option(value).select
