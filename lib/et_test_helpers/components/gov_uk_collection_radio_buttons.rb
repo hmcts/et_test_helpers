@@ -28,7 +28,7 @@ module EtTestHelpers
         end
 
         def assert_value(expected_value)
-          find(:radio_button, expected_value, checked: true, disabled: true)
+          raise Capybara::ExpectationNotMet unless expected_value == value
         end
 
         def set(value)
