@@ -26,6 +26,10 @@ module EtTestHelpers
         find(:govuk_field_error, text: error)
       end
 
+      def assert_value(value)
+        input selected: value
+      end
+
       def set(value)
         value = EtTestHelpers.normalize_locator(value)
         input.find(:xpath, XPath.generate {|x| x.child(:option)[x.string.n.equals(value)]}).select_option
