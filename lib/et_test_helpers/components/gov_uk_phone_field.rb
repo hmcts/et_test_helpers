@@ -22,6 +22,10 @@ module EtTestHelpers
         end
       end
 
+      def assert_error_message(error)
+        find(:govuk_field_error, text: "Error:\n#{error}")
+      end
+
       def set(value)
         input.set(value)
       end
