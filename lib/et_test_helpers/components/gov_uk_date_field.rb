@@ -34,6 +34,10 @@ module EtTestHelpers
             inputs[0].set(parts[0])
             inputs[1].set(parts[1])
             inputs[2].set(parts[2])
+          elsif date.nil?
+            inputs[0].set('')
+            inputs[1].set('')
+            inputs[2].set('')
           else
             inputs[0].set(date.day)
             inputs[1].set(date.month)
