@@ -28,7 +28,7 @@ module EtTestHelpers
         end
 
         def assert_value(expected_value)
-          find(:radio_button, expected_value, checked: true)
+          find(:radio_button, expected_value, checked: true, disabled: true)
         end
 
         def set(value)
