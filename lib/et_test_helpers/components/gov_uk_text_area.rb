@@ -12,7 +12,7 @@ module EtTestHelpers
 
       # @!method input
       # @return [Capybara::Node::Element] The input element
-      element :input, 'textarea'
+      element :input, :fillable_field, type: 'textarea'
 
       # @!method error
       # @return [::SitePrism::Section] The label section - note that all errors have a hidden (1px x 1px prefix containing 'Error:' - this section filters that out)
@@ -24,6 +24,10 @@ module EtTestHelpers
 
       def assert_error_message(error)
         find(:govuk_field_error, text: error)
+      end
+
+      def assert_value(value)
+        input with: value
       end
 
       def set(value)
