@@ -12,7 +12,7 @@ module EtTestHelpers
 
       # @!method input
       # @return [Capybara::Node::Element] The input element
-      element :input, :govuk_field_input
+      element :input, :govuk_file_input
 
       # @!method error
       # @return [::SitePrism::Section] The label section - note that all errors have a hidden (1px x 1px prefix containing 'Error:' - this section filters that out)
@@ -27,7 +27,11 @@ module EtTestHelpers
       end
 
       def set(value)
-        raise 'Not yet implemented'
+        input.set(value)
+      end
+
+      def value
+        input.value
       end
     end
   end
