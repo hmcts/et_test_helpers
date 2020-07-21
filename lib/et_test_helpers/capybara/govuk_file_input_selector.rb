@@ -5,8 +5,8 @@ Capybara.add_selector(:govuk_file_input) do
   end
 
   node_filter(:with) do |node, with|
-    val = File.basename(node.value)
-    (with.is_a?(Regexp) ? with.match?(val) : val == File.basename(with.to_s)).tap do |res|
+    val = node.value
+    (with.is_a?(Regexp) ? with.match?(val) : val.end_with?(File.basename(with.to_s))).tap do |res|
       add_error("Expected value to be #{with.inspect} but was #{val.inspect}") unless res
     end
   end
