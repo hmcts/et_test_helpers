@@ -33,12 +33,15 @@ module EtTestHelpers
 
         def set(value)
           return if value.nil? # We cannot unset radio buttons so nil has no meaning apart from do nothing
+
           option(value).select
         end
 
         def value
-          input_id = find(:radio_button, checked:true)[:id]
+          input_id = find(:radio_button, checked:true, wait: 0.5)[:id]
           find("label[for=#{input_id}").text
+        rescue Capybara::ElementNotFound
+          nil
         end
 
         private
