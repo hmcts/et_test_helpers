@@ -35,7 +35,7 @@ module EtTestHelpers
         def set(values)
           return if values.nil?
 
-          values = Array(values)
+          values = Array(values).map { |v| EtTestHelpers.normalize_locator(v) }
           checkboxes.each do |checkbox|
             checkbox.set(values.include?(checkbox.label.text))
           end
