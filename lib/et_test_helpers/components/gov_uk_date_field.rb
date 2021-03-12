@@ -42,17 +42,24 @@ module EtTestHelpers
         def set(date)
           if date.is_a?(String)
             parts = date.split('/')
-            inputs[0].set(parts[0])
-            inputs[1].set(parts[1])
-            inputs[2].set(parts[2])
+            inputs.each_with_index do |input, idx|
+              input.set(parts[idx])
+            end
           elsif date.nil?
-            inputs[0].set('')
-            inputs[1].set('')
-            inputs[2].set('')
+            inputs.each do |input|
+              input.set('')
+            end
           else
-            inputs[0].set(date.day)
-            inputs[1].set(date.month)
-            inputs[2].set(date.year)
+            if inputs.length == 3
+              inputs[0].set(date.day)
+              inputs[1].set(date.month)
+              inputs[2].set(date.year)
+            elsif inputs.length == 2
+              inputs[0].set(date.month)
+              inputs[1].set(date.year)
+            else
+              raise "A GDS date field must consist of 2 or 3 input elements but this had #{inputs.length}"
+            end
           end
         end
 
