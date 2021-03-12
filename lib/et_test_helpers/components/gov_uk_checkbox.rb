@@ -26,13 +26,7 @@ module EtTestHelpers
         find(:govuk_field_error, text: error)
       end
 
-      def checked?
-        input.checked?
-      end
-
-      def set(value)
-        input.set(value)
-      end
+      delegate [:set, :value, :checked?, :disabled?] => :input
     end
   end
 end
