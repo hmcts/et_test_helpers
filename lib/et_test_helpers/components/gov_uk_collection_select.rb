@@ -41,6 +41,8 @@ module EtTestHelpers
 
         input.find(:xpath, XPath.generate {|x| x.child(:option)[x.attr(:value).equals(system_value)]}).text
       end
+
+      delegate [:disabled?] => :input
     end
   end
 end

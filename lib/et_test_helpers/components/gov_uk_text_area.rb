@@ -30,14 +30,6 @@ module EtTestHelpers
         input with: value
       end
 
-      def set(value)
-        input.set(value)
-      end
-
-      def value
-        input.value
-      end
-
       def assert_too_many_characters(message = nil)
         if message
           character_count_message(text: message).present?
@@ -45,6 +37,8 @@ module EtTestHelpers
           character_count_message.present?
         end
       end
+
+      delegate [:set, :value, :disabled?] => :input
 
       private
 
