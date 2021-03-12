@@ -37,6 +37,18 @@ module EtTestHelpers
       def value
         input.value
       end
+
+      def assert_too_many_characters(message = nil)
+        if message
+          character_count_message(text: message).present?
+        else
+          character_count_message.present?
+        end
+      end
+
+      private
+
+      element :character_count_message, '.govuk-character-count__message.govuk-error-message'
     end
   end
 end
