@@ -69,6 +69,10 @@ module EtTestHelpers
         rescue ArgumentError
           nil
         end
+
+        def disabled?
+          inputs.all?(&:disabled?)
+        end
       end
 
       delegate [:assert_value, :assert_error_message, :set, :value, :label, :hint, :error, :has_no_error?, :has_no_hint?] => :fieldset
