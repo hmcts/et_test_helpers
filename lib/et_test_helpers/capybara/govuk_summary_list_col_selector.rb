@@ -4,6 +4,10 @@ Capybara.add_selector(:govuk_summary_list_col) do
     locator = ::EtTestHelpers.normalize_locator(locator)
     # Helps with nicer error messages from rspec etc..
     @definition.label("GOVUK summary list col labelled <#{locator}>")
-    XPath.generate { |x| x.descendant(:dt)[x.attr(:class).contains_word('govuk-summary-list__value') & x.string.n.equals(locator)] }
+    XPath.generate do |x|
+      q = x.attr(:class).contains_word('govuk-summary-list__value')
+      q = q & x.string.n.equals(locator) unless locator.nil?
+      x.descendant(:dt)[q]
+    end
   end
 end
