@@ -44,6 +44,17 @@ module EtTestHelpers
           nil
         end
 
+        def assert_option(value)
+          root_element.assert_selector(:govuk_radio_button, value)
+        end
+
+        def has_option?(value)
+          assert_option(value)
+          true
+        rescue Capybara::ExpectationNotMet
+          false
+        end
+
         private
 
         def option(value)
@@ -51,7 +62,7 @@ module EtTestHelpers
         end
 
       end
-      delegate [:assert_value, :assert_error_message, :set, :value, :label, :hint, :error, :has_no_error?, :has_no_hint?, :has_hint?, :has_error?] => :fieldset
+      delegate %i[assert_value assert_error_message set value label hint error has_no_error? has_no_hint? has_hint? has_error? assert_option has_option?] => :fieldset
 
       class Option < ::SitePrism::Section
         def select
