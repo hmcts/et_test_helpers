@@ -73,6 +73,10 @@ module EtTestHelpers
         def disabled?
           inputs.all?(&:disabled?)
         end
+
+        def valid?
+          inputs.length >= 2
+        end
       end
 
       delegate %i[assert_value assert_error_message set value label hint error has_no_error? has_no_hint? disabled? has_hint? has_error?] => :fieldset
