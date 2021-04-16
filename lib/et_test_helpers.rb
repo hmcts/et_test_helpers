@@ -1,5 +1,6 @@
 require "et_test_helpers/version"
 require "active_support/core_ext/string"
+require "rspec/matchers"
 require "et_test_helpers/capybara"
 require "et_test_helpers/components"
 require "et_test_helpers/page"
