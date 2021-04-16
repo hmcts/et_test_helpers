@@ -20,8 +20,15 @@ module EtTestHelpers
       # - label - The visual label for the text input - which should be a label attached to the field in html
       # - hint - If specified, the text field should have a hint matching this text to be valid
       # - errors - An object containing the different errors that can be shown - matched using has_error?
+      DEFAULT_FIND_OPTIONS = { minimum: 1 }
+
       def gds_text_input(name, specification, **kw_args, &block)
-        section name, govuk_component(:text_field), :govuk_text_field, specification, **kw_args, &block
+        section name,
+                govuk_component(:text_field),
+                :govuk_text_field,
+                specification,
+                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                &block
       end
 
       # Defines a section for a gds fieldset whose specification matches that of the section of
@@ -29,7 +36,12 @@ module EtTestHelpers
       # The only specification keys used are
       #  - label - The visual label for the fieldset - which should be a legend in the html
       def gds_fieldset(name, specification, **kw_args, &block)
-        section name, govuk_component(:fieldset), :govuk_fieldset, specification, &block
+        section name,
+                govuk_component(:fieldset),
+                :govuk_fieldset,
+                specification,
+                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                &block
       end
 
       # Defines a section for a gds submit button whose specification matches that of the section of
@@ -37,7 +49,12 @@ module EtTestHelpers
       # The only specification keys used are
       #  - label - The visual label for the submit button
       def gds_submit_button(name, specification, **kw_args, &block)
-        section name, govuk_component(:submit), :govuk_submit, specification, **kw_args, &block
+        section name,
+                govuk_component(:submit),
+                :govuk_submit,
+                specification,
+                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                &block
       end
 
       # See https://design-system.service.gov.uk/components/error-summary/
@@ -46,7 +63,12 @@ module EtTestHelpers
       # The only specification keys used are
       #  - label - The visual label for the error summary (i.e. the title in the box)
       def gds_error_summary(name, specification, **kw_args, &block)
-        section name, govuk_component(:error_summary), :govuk_error_summary, specification, **kw_args, &block
+        section name,
+                govuk_component(:error_summary),
+                :govuk_error_summary,
+                specification,
+                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                &block
       end
 
       # See https://design-system.service.gov.uk/components/file-upload/
@@ -58,7 +80,12 @@ module EtTestHelpers
       # - errors - An object containing the different errors that can be shown - matched using has_error?
       # @return [EtTestHelpers::Components::GovUKFileField] The site prism section
       def gds_file_upload(name, specification, **kw_args, &block)
-        section name, govuk_component(:file_field), :govuk_file_field, specification, **kw_args, &block
+        section name,
+                govuk_component(:file_field),
+                :govuk_file_field,
+                specification,
+                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                &block
       end
 
       # See https://design-system.service.gov.uk/components/textarea/
@@ -70,7 +97,12 @@ module EtTestHelpers
       # - errors - An object containing the different errors that can be shown - matched using has_error?
       #   @return [EtTestHelpers::Components::GovUKTextArea] The site prism section
       def gds_text_area(name, specification, **kw_args, &block)
-        section name, govuk_component(:text_area), :govuk_text_area, specification, **kw_args, &block
+        section name,
+                govuk_component(:text_area),
+                :govuk_text_area,
+                specification,
+                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                &block
       end
 
       # See https://design-system.service.gov.uk/components/radios/
@@ -85,7 +117,12 @@ module EtTestHelpers
       # @option specification [Hash] :options A hash containing the different options the group should have
       # @return [EtTestHelpers::Components::GovUKCollectionRadioButtons] The site prism section
       def gds_radios(name, specification, **kw_args, &block)
-        section name, govuk_component(:collection_radio_buttons), :govuk_collection_radio_buttons, specification, **kw_args, &block
+        section name,
+                govuk_component(:collection_radio_buttons),
+                :govuk_collection_radio_buttons,
+                specification,
+                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                &block
       end
 
       # See https://design-system.service.gov.uk/components/checkboxes/
@@ -100,7 +137,12 @@ module EtTestHelpers
       # @option specification [Hash] :options A hash containing the different options the group should have
       # @return [EtTestHelpers::Components::GovUKCollectionCheckBoxes] The site prism section
       def gds_checkboxes(name, specification, **kw_args, &block)
-        section name, govuk_component(:collection_check_boxes), :govuk_collection_check_boxes, specification, **kw_args, &block
+        section name,
+                govuk_component(:collection_check_boxes),
+                :govuk_collection_check_boxes,
+                specification,
+                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                &block
       end
 
       # See https://design-system.service.gov.uk/components/select/
@@ -115,7 +157,12 @@ module EtTestHelpers
       # @option specification [Hash] :options A hash containing the different options the select field should have
       # @return [EtTestHelpers::Components::GovUKCollectionSelect] The site prism section
       def gds_select(name, specification, **kw_args, &block)
-        section name, govuk_component(:collection_select), :govuk_collection_select, specification, **kw_args, &block
+        section name,
+                govuk_component(:collection_select),
+                :govuk_collection_select,
+                specification,
+                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                &block
       end
 
       # See https://design-system.service.gov.uk/components/date-input/
@@ -130,7 +177,12 @@ module EtTestHelpers
       # @option specification [Hash] :options A hash containing keys :day, :month and :year which specify the labels for the relevant fields
       # @return [EtTestHelpers::Components::GovUKDateField] The site prism section
       def gds_date_input(name, specification, **kw_args, &block)
-        section name, govuk_component(:date_field), :govuk_date_field, specification, **kw_args, &block
+        section name,
+                govuk_component(:date_field),
+                :govuk_date_field,
+                specification,
+                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                &block
       end
 
       # Defines a section for a gds email input component whose specification matches that of the section of
@@ -143,7 +195,12 @@ module EtTestHelpers
       # @option specification [Hash] :errors A hash containing the different errors that can be shown - matched using has_error?
       # @return [EtTestHelpers::Components::GovUKEmailField] The site prism section
       def gds_email_input(name, specification, **kw_args, &block)
-        section name, govuk_component(:email_field), :govuk_email_field, specification, **kw_args, &block
+        section name,
+                govuk_component(:email_field),
+                :govuk_email_field,
+                specification,
+                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                &block
       end
 
       # Defines a section for a gds phone input component whose specification matches that of the section of
@@ -156,7 +213,12 @@ module EtTestHelpers
       # @option specification [Hash] :errors A hash containing the different errors that can be shown - matched using has_error?
       # @return [EtTestHelpers::Components::GovUKPhoneField] The site prism section
       def gds_phone_input(name, specification, **kw_args, &block)
-        section name, govuk_component(:phone_field), :govuk_phone_field, specification, **kw_args, &block
+        section name,
+                govuk_component(:phone_field),
+                :govuk_phone_field,
+                specification,
+                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                &block
       end
     end
   end
