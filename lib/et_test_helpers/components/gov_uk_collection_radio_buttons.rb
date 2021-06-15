@@ -38,7 +38,7 @@ module EtTestHelpers
         end
 
         def value
-          input_id = find(:radio_button, checked:true, wait: 0.5)[:id]
+          input_id = find(:radio_button, checked:true, visible: false, wait: 0.5)[:id]
           find("label[for=#{input_id}").text
         rescue Capybara::ElementNotFound
           nil
