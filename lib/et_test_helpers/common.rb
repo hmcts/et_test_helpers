@@ -71,6 +71,21 @@ module EtTestHelpers
                 &block
       end
 
+      # See https://design-system.service.gov.uk/components/details/
+      # Defines a section for a gds details component whose specification matches that of the section of
+      # the I18n file pointed to by specification.
+      # The only specification keys used are
+      #  - label - The text for the collapsible link for the details
+      #   @return [EtTestHelpers::Components::GovUKDetails] The site prism section
+      def gds_details(name, specification, **kw_args, &block)
+        section name,
+                govuk_component(:details),
+                :govuk_details,
+                specification,
+                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                &block
+      end
+
       # See https://design-system.service.gov.uk/components/file-upload/
       # Defines a section for a gds file upload component whose specification matches that of the section of
       # the I18n file pointed to by specification.
