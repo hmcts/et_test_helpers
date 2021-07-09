@@ -145,6 +145,25 @@ module EtTestHelpers
                 &block
       end
 
+      # Defines a section for gds checkbox component whose specification matches that of the section of
+      # the I18n file pointed to by specification.
+      # @param [Symbol] name The name of the primary method to be defined in order to access this component
+      # @param [Symbol, Hash, String] specification The symbol, hash or string to identify the component
+      # The only specification keys used are
+      # @option specification [String] :label The visual label for the check box
+      # @option specification [String] :hint If specified, the check box should have a hint matching this text to be valid
+      # @option specification [Hash] :errors A hash containing the different errors that can be shown - matched using has_error?
+      # @option specification [Hash] :options A hash containing the different options the group should have
+      # @return [EtTestHelpers::Components::GovUKCheckbox] The site prism section
+      def gds_checkbox(name, specification, **kw_args, &block)
+        section name,
+                govuk_component(:checkbox),
+                :govuk_checkbox,
+                specification,
+                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                &block
+      end
+
       # See https://design-system.service.gov.uk/components/select/
       # Defines a section for a gds select component whose specification matches that of the section of
       # the I18n file pointed to by specification.
