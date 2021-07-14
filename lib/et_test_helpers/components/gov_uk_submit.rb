@@ -5,6 +5,8 @@ module EtTestHelpers
       def submit
         root_element.click
       end
+
+      alias :click :submit
     end
   end
 end
