@@ -5,6 +5,6 @@ Capybara.add_selector(:govuk_submit) do
     locator = locator[:label] if locator.is_a?(Hash)
     # Helps with nicer error messages from rspec etc..
     @definition.label("GOVUK submit button labelled <#{locator}>")
-    XPath.generate { |x| x.descendant(:input)[x.attr(:class).contains_word('govuk-button') & x.attr(:value).equals(locator)] }
+    XPath.generate { |x| x.descendant(:button)[x.attr(:class).contains_word('govuk-button') & x.string.n.equals(locator)] }
   end
 end

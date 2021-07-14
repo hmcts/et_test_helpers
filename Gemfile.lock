@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    et_test_helpers (0.1.24)
+    et_test_helpers (1.0.0)
       activesupport (> 5.0)
       capybara (~> 3)
       i18n (~> 1.8)
