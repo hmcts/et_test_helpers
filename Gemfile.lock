@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    et_test_helpers (1.0.2)
+    et_test_helpers (1.0.3)
       activesupport (> 5.0)
       capybara (~> 3)
       i18n (~> 1.8)
@@ -32,10 +32,10 @@ GEM
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
     mini_mime (1.1.0)
-    mini_portile2 (2.5.3)
+    mini_portile2 (2.6.1)
     minitest (5.14.4)
-    nokogiri (1.11.7)
-      mini_portile2 (~> 2.5.0)
+    nokogiri (1.12.3)
+      mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
     public_suffix (4.0.6)
     racc (1.5.2)
