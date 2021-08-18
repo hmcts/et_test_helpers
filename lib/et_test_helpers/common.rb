@@ -6,12 +6,28 @@ module EtTestHelpers
       # Helper to provide the correct component class for use as the second parameter to the section method in site prism
       # @param [String,Symbol] type - The type of component eg :text_field
       # @return [::EtTestHelpers::Components::GovUKTextField] - This can be many types
-      def govuk_component(type)
-        klass_name = "::EtTestHelpers::Components::GovUK#{type.to_s.camelize}"
+      def govuk_component(type, scope: nil)
+        component_classname = "GovUK#{type.to_s.camelize}"
+        klass_name = "::EtTestHelpers::Components::#{component_classname}"
         klass      = klass_name.safe_constantize
-        return klass unless klass.nil?
+        raise "Unknown govuk_component with a type of '#{type}' - it should be defined as '#{klass_name}'" if klass.nil?
 
-        raise "Unknown govuk_component with a type of '#{type}' - it should be defined as '#{klass_name}'"
+        if scope.nil?
+          klass
+        else
+          wrapper_classname = "#{component_classname}Wrapper#{(Time.now.to_f * 1000000).to_i}"
+          class_eval <<-CODE, __FILE__, __LINE__ + 1
+            class ::EtTestHelpers::Components::#{wrapper_classname} < #{klass_name}
+              cattr_accessor :govuk_component_args
+              self.govuk_component_args = ['#{type}', :'#{scope}']
+
+              def inspect
+                "govuk_component('#{type}', :'#{scope}'}) #{klass_name} \#{super}"
+              end
+            end
+          CODE
+          ::EtTestHelpers::Components.const_get(wrapper_classname)
+        end
       end
 
       # Defines a section for a gds text input whose specification matches that of the section of
@@ -27,7 +43,7 @@ module EtTestHelpers
                 govuk_component(:text_field),
                 :govuk_text_field,
                 specification,
-                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                **DEFAULT_FIND_OPTIONS.merge(kw_args),
                 &block
       end
 
@@ -40,7 +56,7 @@ module EtTestHelpers
                 govuk_component(:fieldset),
                 :govuk_fieldset,
                 specification,
-                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                **DEFAULT_FIND_OPTIONS.merge(kw_args),
                 &block
       end
 
@@ -53,7 +69,7 @@ module EtTestHelpers
                 govuk_component(:submit),
                 :govuk_submit,
                 specification,
-                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                **DEFAULT_FIND_OPTIONS.merge(kw_args),
                 &block
       end
 
@@ -67,7 +83,7 @@ module EtTestHelpers
                 govuk_component(:error_summary),
                 :govuk_error_summary,
                 specification,
-                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                **DEFAULT_FIND_OPTIONS.merge(kw_args),
                 &block
       end
 
@@ -82,7 +98,7 @@ module EtTestHelpers
                 govuk_component(:details),
                 :govuk_details,
                 specification,
-                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                **DEFAULT_FIND_OPTIONS.merge(kw_args),
                 &block
       end
 
@@ -99,7 +115,7 @@ module EtTestHelpers
                 govuk_component(:file_field),
                 :govuk_file_field,
                 specification,
-                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                **DEFAULT_FIND_OPTIONS.merge(kw_args),
                 &block
       end
 
@@ -116,7 +132,7 @@ module EtTestHelpers
                 govuk_component(:text_area),
                 :govuk_text_area,
                 specification,
-                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                **DEFAULT_FIND_OPTIONS.merge(kw_args),
                 &block
       end
 
@@ -133,10 +149,10 @@ module EtTestHelpers
       # @return [EtTestHelpers::Components::GovUKCollectionRadioButtons] The site prism section
       def gds_radios(name, specification, **kw_args, &block)
         section name,
-                govuk_component(:collection_radio_buttons),
+                govuk_component(:collection_radio_buttons, scope: specification),
                 :govuk_collection_radio_buttons,
                 specification,
-                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                **DEFAULT_FIND_OPTIONS.merge(kw_args),
                 &block
       end
 
@@ -156,7 +172,7 @@ module EtTestHelpers
                 govuk_component(:collection_check_boxes),
                 :govuk_collection_check_boxes,
                 specification,
-                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                **DEFAULT_FIND_OPTIONS.merge(kw_args),
                 &block
       end
 
@@ -175,7 +191,7 @@ module EtTestHelpers
                 govuk_component(:checkbox),
                 :govuk_checkbox,
                 specification,
-                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                **DEFAULT_FIND_OPTIONS.merge(kw_args),
                 &block
       end
 
@@ -195,7 +211,7 @@ module EtTestHelpers
                 govuk_component(:collection_select),
                 :govuk_collection_select,
                 specification,
-                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                **DEFAULT_FIND_OPTIONS.merge(kw_args),
                 &block
       end
 
@@ -215,7 +231,7 @@ module EtTestHelpers
                 govuk_component(:date_field),
                 :govuk_date_field,
                 specification,
-                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                **DEFAULT_FIND_OPTIONS.merge(kw_args),
                 &block
       end
 
@@ -233,7 +249,7 @@ module EtTestHelpers
                 govuk_component(:email_field),
                 :govuk_email_field,
                 specification,
-                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                **DEFAULT_FIND_OPTIONS.merge(kw_args),
                 &block
       end
 
@@ -251,7 +267,7 @@ module EtTestHelpers
                 govuk_component(:phone_field),
                 :govuk_phone_field,
                 specification,
-                **(DEFAULT_FIND_OPTIONS.merge(kw_args)),
+                **DEFAULT_FIND_OPTIONS.merge(kw_args),
                 &block
       end
     end

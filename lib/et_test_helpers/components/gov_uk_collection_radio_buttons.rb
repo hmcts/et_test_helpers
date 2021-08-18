@@ -1,7 +1,8 @@
+require_relative './component_base'
 module EtTestHelpers
   module Components
     # A gov.uk GDS standard text field representation for testing
-    class GovUKCollectionRadioButtons < ::SitePrism::Section
+    class GovUKCollectionRadioButtons < ComponentBase
       section :fieldset, 'fieldset' do
         # @!method label
         # @return [Capybara::Node::Element] The label element
@@ -38,7 +39,7 @@ module EtTestHelpers
         end
 
         def value
-          input_id = find(:radio_button, checked:true, visible: false, wait: 0.5)[:id]
+          input_id = find(:radio_button, checked: true, visible: false, wait: 0.5)[:id]
           find("label[for=#{input_id}").text
         rescue Capybara::ElementNotFound
           nil
@@ -55,21 +56,50 @@ module EtTestHelpers
           false
         end
 
+        def assert_valid_options
+          missing = []
+          root_scope[:options].values.each do |option|
+            next if has_option?(option)
+
+            missing << "#{::EtTestHelpers.normalize_locator(option)} (:#{option})"
+          end
+          unless missing.empty?
+            raise Capybara::ExpectationNotMet,
+                  "#{inspect} Expected valid options, but the following are missing :- #{missing}"
+          end
+        end
+
+        def assert_valid_hint
+          raise "The root scope :'#{parent.govuk_component_args.second}' must have a 'hint' property" unless root_scope.key?(:hint)
+
+          hint_text = EtTestHelpers.normalize_locator(root_scope[:hint])
+          return if has_hint? text: hint_text
+
+          raise Capybara::ExpectationNotMet,
+            "#{inspect} Expected valid hint, but there wasn't one with the text '#{EtTestHelpers.normalize_locator(root_scope[:hint])}' (:'#{root_scope[:hint]}')"
+        end
+
         private
 
         def option(value)
           Option.new self, find(:govuk_radio_button, value)
         end
 
+        def root_scope
+          parent.i18n_scope.tap do |value|
+            unless value.is_a?(Hash) && value[:options].is_a?(Hash)
+              raise "#{parent.govuk_component_args.second} must have :options defined in the i18n file"
+            end
+          end
+        end
       end
-      delegate %i[assert_value assert_error_message set value label hint error has_no_error? has_no_hint? has_hint? has_error? assert_option has_option?] => :fieldset
+      delegate %i[assert_value assert_error_message set value label hint error has_no_error? has_no_hint? has_hint?
+                  has_error? assert_option has_option? assert_valid_options assert_valid_hint] => :fieldset
 
       class Option < ::SitePrism::Section
         def select
           label.click
         end
-
-        private
 
         element :label, :css, 'label'
         element :input, :css, 'input', visible: false
