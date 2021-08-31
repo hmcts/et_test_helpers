@@ -2,6 +2,11 @@ module EtTestHelpers
   # @private
   module Common
     extend ActiveSupport::Concern
+
+    def t(*args)
+      EtTestHelpers::Config.instance.translation.call(*args)
+    end
+
     class_methods do
       # Helper to provide the correct component class for use as the second parameter to the section method in site prism
       # @param [String,Symbol] type - The type of component eg :text_field
@@ -24,6 +29,18 @@ module EtTestHelpers
               def inspect
                 "govuk_component('#{type}', :'#{scope}'}) #{klass_name} \#{super}"
               end
+
+              def i18n_scope
+                t(govuk_component_args.second)
+              end
+
+              def root_scope
+                i18n_scope.tap do |value|
+                  unless value.is_a?(Hash)
+                    raise "#{scope} must contain at least label in the i18n file"
+                  end
+                end
+              end
             end
           CODE
           ::EtTestHelpers::Components.const_get(wrapper_classname)
@@ -40,7 +57,7 @@ module EtTestHelpers
 
       def gds_text_input(name, specification, **kw_args, &block)
         section name,
-                govuk_component(:text_field),
+                govuk_component(:text_field, scope: specification),
                 :govuk_text_field,
                 specification,
                 **DEFAULT_FIND_OPTIONS.merge(kw_args),
@@ -129,7 +146,7 @@ module EtTestHelpers
       #   @return [EtTestHelpers::Components::GovUKTextArea] The site prism section
       def gds_text_area(name, specification, **kw_args, &block)
         section name,
-                govuk_component(:text_area),
+                govuk_component(:text_area, scope: specification),
                 :govuk_text_area,
                 specification,
                 **DEFAULT_FIND_OPTIONS.merge(kw_args),
@@ -169,7 +186,7 @@ module EtTestHelpers
       # @return [EtTestHelpers::Components::GovUKCollectionCheckBoxes] The site prism section
       def gds_checkboxes(name, specification, **kw_args, &block)
         section name,
-                govuk_component(:collection_check_boxes),
+                govuk_component(:collection_check_boxes, scope: specification),
                 :govuk_collection_check_boxes,
                 specification,
                 **DEFAULT_FIND_OPTIONS.merge(kw_args),
@@ -208,7 +225,7 @@ module EtTestHelpers
       # @return [EtTestHelpers::Components::GovUKCollectionSelect] The site prism section
       def gds_select(name, specification, **kw_args, &block)
         section name,
-                govuk_component(:collection_select),
+                govuk_component(:collection_select, scope: specification),
                 :govuk_collection_select,
                 specification,
                 **DEFAULT_FIND_OPTIONS.merge(kw_args),
@@ -228,7 +245,7 @@ module EtTestHelpers
       # @return [EtTestHelpers::Components::GovUKDateField] The site prism section
       def gds_date_input(name, specification, **kw_args, &block)
         section name,
-                govuk_component(:date_field),
+                govuk_component(:date_field, scope: specification),
                 :govuk_date_field,
                 specification,
                 **DEFAULT_FIND_OPTIONS.merge(kw_args),

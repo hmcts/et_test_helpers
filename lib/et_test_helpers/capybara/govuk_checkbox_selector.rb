@@ -1,6 +1,6 @@
 Capybara.add_selector(:govuk_checkbox) do
   label 'GOVUK GDS checkbox container labelled'
-  xpath do |locator, **options|
+  xpath do |locator, search_path: nil, **options|
     locator = ::EtTestHelpers.normalize_locator(locator)
     locator = locator[:label] if locator.is_a?(Hash)
     # Helps with nicer error messages from rspec etc..

@@ -4,6 +4,7 @@ module EtTestHelpers
     # A gov.uk GDS standard text field representation for testing
     class GovUKCollectionRadioButtons < ComponentBase
       section :fieldset, 'fieldset' do
+        include EtTestHelpers::Section
         # @!method label
         # @return [Capybara::Node::Element] The label element
         element :label, 'legend'
@@ -70,19 +71,29 @@ module EtTestHelpers
         end
 
         def assert_valid_hint
-          raise "The root scope :'#{parent.govuk_component_args.second}' must have a 'hint' property" unless root_scope.key?(:hint)
+          unless root_scope.key?(:hint)
+            raise "The root scope :'#{parent.govuk_component_args.second}' must have a 'hint' property"
+          end
 
           hint_text = EtTestHelpers.normalize_locator(root_scope[:hint])
           return if has_hint? text: hint_text
 
           raise Capybara::ExpectationNotMet,
-            "#{inspect} Expected valid hint, but there wasn't one with the text '#{EtTestHelpers.normalize_locator(root_scope[:hint])}' (:'#{root_scope[:hint]}')"
+                "#{inspect} Expected valid hint, but there wasn't one with the text '#{EtTestHelpers.normalize_locator(root_scope[:hint])}' (:'#{root_scope[:hint]}')"
         end
 
         private
 
         def option(value)
-          Option.new self, find(:govuk_radio_button, value)
+          Option.new self, find(:govuk_radio_button, find_option_value(value))
+        end
+
+        def find_option_value(value)
+          return value unless value.is_a?(Symbol)
+
+          translated = t(:"#{parent.govuk_component_args.second}.options.#{value}", raise: false)
+          translated ||= t(value)
+          translated
         end
 
         def root_scope

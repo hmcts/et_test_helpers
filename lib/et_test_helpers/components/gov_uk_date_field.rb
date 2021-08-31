@@ -1,7 +1,8 @@
+require_relative './component_base'
 module EtTestHelpers
   module Components
     # A gov.uk GDS standard date field representation for testing
-    class GovUKDateField < ::SitePrism::Section
+    class GovUKDateField < ComponentBase
       section :fieldset, 'fieldset' do
 
         # @!method label
@@ -76,6 +77,18 @@ module EtTestHelpers
 
         def valid?
           inputs.length >= 2
+        end
+
+        def assert_valid_hint
+          unless root_scope.key?(:hint)
+            raise "The root scope :'#{parent.govuk_component_args.second}' must have a 'hint' property"
+          end
+
+          hint_text = EtTestHelpers.normalize_locator(root_scope[:hint])
+          return if has_hint? text: hint_text
+
+          raise Capybara::ExpectationNotMet,
+                "#{inspect} Expected valid hint, but there wasn't one with the text '#{EtTestHelpers.normalize_locator(root_scope[:hint])}' (:'#{root_scope[:hint]}')"
         end
       end
 

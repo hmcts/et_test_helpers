@@ -1,7 +1,8 @@
+require_relative './component_base'
 module EtTestHelpers
   module Components
     # A gov.uk GDS standard text field representation for testing
-    class GovUKTextField < ::SitePrism::Section
+    class GovUKTextField < ComponentBase
       # @!method label
       # @return [Capybara::Node::Element] The label element
       element :label, :govuk_field_label

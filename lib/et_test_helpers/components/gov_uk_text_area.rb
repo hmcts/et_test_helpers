@@ -1,7 +1,8 @@
+require_relative './component_base'
 module EtTestHelpers
   module Components
     # A gov.uk GDS standard text area representation for testing
-    class GovUKTextArea < ::SitePrism::Section
+    class GovUKTextArea < ComponentBase
       # @!method label
       # @return [Capybara::Node::Element] The label element
       element :label, :govuk_field_label
@@ -37,6 +38,19 @@ module EtTestHelpers
           character_count_message.present?
         end
       end
+
+      def assert_valid_hint
+        unless root_scope.key?(:hint)
+          raise "The root scope :'#{parent.govuk_component_args.second}' must have a 'hint' property"
+        end
+
+        hint_text = EtTestHelpers.normalize_locator(root_scope[:hint])
+        return if has_hint? text: hint_text
+
+        raise Capybara::ExpectationNotMet,
+              "#{inspect} Expected valid hint, but there wasn't one with the text '#{EtTestHelpers.normalize_locator(root_scope[:hint])}' (:'#{root_scope[:hint]}')"
+      end
+
 
       delegate [:set, :value, :disabled?] => :input
 
