@@ -136,6 +136,24 @@ module EtTestHelpers
                 &block
       end
 
+      # See https://design-system.service.gov.uk/components/file-upload/
+      # Defines a section for a gds file dropzone upload component whose specification matches that of the section of
+      # the I18n file pointed to by specification.
+      # The only specification keys used are
+      # - label - The visual label for the file input field (i.e. the label attached to it)
+      # - hint - If specified, the file input field should have a hint matching this text to be valid
+      # - errors - An object containing the different errors that can be shown - matched using has_error?
+      # @return [EtTestHelpers::Components::GovUKFileDropzoneField] The site prism section
+      def gds_file_dropzone_upload(name, specification, **kw_args, &block)
+        section name,
+                govuk_component(:file_dropzone_field),
+                :govuk_file_dropzone_field,
+                specification,
+                **DEFAULT_FIND_OPTIONS.merge(kw_args),
+                &block
+      end
+
+
       # See https://design-system.service.gov.uk/components/textarea/
       # Defines a section for a gds text area component whose specification matches that of the section of
       # the I18n file pointed to by specification.

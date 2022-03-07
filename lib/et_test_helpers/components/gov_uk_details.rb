@@ -17,8 +17,10 @@ module EtTestHelpers
       end
 
       def toggle
-        root_element.click
+        summary_element.click
       end
+
+      element :summary_element, 'summary'
     end
   end
 end
