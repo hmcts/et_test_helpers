@@ -10,7 +10,7 @@ module EtTestHelpers
       # @return [Capybara::Node::Element] The hint element
       element :hint, :govuk_field_hint
 
-      element :button, :govuk_button
+      element :choose_file_button, 'button[data-gds-dropzone-upload-button]'
 
       element :filename_hidden_input, 'input[data-submit-key="filename"]', visible: false
 
@@ -34,7 +34,7 @@ module EtTestHelpers
 
       def set(value)
         attach_file(value) do
-          button.click
+          choose_file_button.click
         end
         find('.dz-preview.dz-complete')
       end
