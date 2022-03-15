@@ -36,7 +36,7 @@ module EtTestHelpers
         attach_file(value) do
           button.click
         end
-        send_keys(value)
+        find('.dz-preview.dz-complete')
       end
 
       def remove_file
