@@ -8,7 +8,7 @@ Capybara.add_selector(:govuk_summary_list_col) do
     XPath.generate do |x|
       q = x.attr(:class).contains_word('govuk-summary-list__value')
       q &= x.string.n.equals(locator) unless locator.nil?
-      x.descendant(:dt)[q]
+      x.descendant(:dd)[q]
     end
   end
 end
