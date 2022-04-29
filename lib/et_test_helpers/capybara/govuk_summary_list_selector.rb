@@ -1,7 +1,7 @@
 Capybara.add_selector(:govuk_summary_list) do
   label 'GOVUK summary list'
-  xpath do |locator, **_options|
-    locator = ::EtTestHelpers.normalize_locator(locator)
+  xpath do |locator, translation_options: {}, **_options|
+    locator = ::EtTestHelpers.normalize_locator(locator, translation_options: translation_options)
     locator = locator[:label] if locator.is_a?(Hash)
     @definition.label("GOVUK summary list labelled #{locator}") unless locator.nil?
     XPath.generate do |x|

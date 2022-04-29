@@ -8,10 +8,10 @@ require "et_test_helpers/section"
 require "et_test_helpers/config"
 require "et_test_helpers/rspec"
 module EtTestHelpers
-  def self.normalize_locator(locator)
+  def self.normalize_locator(locator, translation_options: {})
     return locator unless locator.is_a?(Symbol)
 
-    translation.call(locator)
+    translation.call(locator, **translation_options)
   end
 
   def self.config
