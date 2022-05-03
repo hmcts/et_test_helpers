@@ -5,6 +5,6 @@ Capybara.add_selector(:govuk_link) do
     locator = locator[:label] if locator.is_a?(Hash)
     # Helps with nicer error messages from rspec etc..
     @definition.label("GOVUK GDS Link labelled <#{locator}>")
-    XPath.generate { |x| x.descendant(:a)[x.attr(:class).contains_word('govuk-link') & x.string.n.equals(locator)] }
+    XPath.generate { |x| x.descendant(:a)[x.attr(:class).contains_word('govuk-link') & x.string.n.is(locator)] }
   end
 end
