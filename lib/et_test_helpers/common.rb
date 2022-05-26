@@ -53,7 +53,7 @@ module EtTestHelpers
       # - label - The visual label for the text input - which should be a label attached to the field in html
       # - hint - If specified, the text field should have a hint matching this text to be valid
       # - errors - An object containing the different errors that can be shown - matched using has_error?
-      DEFAULT_FIND_OPTIONS = { minimum: 1 }
+      DEFAULT_FIND_OPTIONS = {  }
 
       def gds_text_input(name, specification, **kw_args, &block)
         section name,
