@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    et_test_helpers (1.0.16)
+    et_test_helpers (1.0.17)
       activesupport (> 5.0)
       capybara (~> 3)
       i18n (~> 1.8)
@@ -40,11 +40,11 @@ GEM
       racc (~> 1.4)
     public_suffix (4.0.7)
     racc (1.6.0)
-    rack (2.2.3)
+    rack (2.2.3.1)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rake (12.3.3)
-    regexp_parser (2.4.0)
+    regexp_parser (2.5.0)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
       rspec-expectations (~> 3.9.0)
