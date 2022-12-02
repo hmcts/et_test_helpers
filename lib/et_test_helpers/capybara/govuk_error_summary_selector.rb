@@ -7,9 +7,7 @@ Capybara.add_selector(:govuk_error_summary) do
     XPath.generate do |x|
       x.descendant(:div)[
         x.attr(:class).contains_word('govuk-error-summary') &
-          x.child[x.attr(:role).equals('alert') &
-            x.child(:h2)[x.string.n.equals(locator)]
-          ]
+          x.descendant(:h2)[x.attr(:class).contains_word('govuk-error-summary__title') & x.string.n.equals(locator)]
       ]
     end
   end
