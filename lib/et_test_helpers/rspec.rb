@@ -41,18 +41,26 @@ module EtTestHelpers
     def self.stub_create_blob_to_azure_setup
       key = "direct_uploads/#{SecureRandom.uuid}".freeze
       WebMock.stub_request(:post, "#{ENV.fetch('ET_API_URL', 'http://api.et.127.0.0.1.nip.io:3100/api/v2')}/create_blob")
-        .to_return headers: { 'Content-Type': 'application/json' },
-                   body:
-                     {
-                       "data": {
-                         "key": key
-                       },
-                       "meta": {
-                         "cloud_provider": "azure"
-                       },
-                       "status": "accepted",
-                       "uuid": SecureRandom.uuid
-                     }.to_json
+      .to_return do |request|
+        env = request.headers.transform_keys { |key| key.underscore.upcase }.merge('rack.input' => StringIO.new(request.body))
+        parsed_request = Rack::Multipart.parse_multipart(env)
+        {
+          headers: { 'Content-Type': 'application/json' },
+          body:
+            {
+              "data": {
+                "key": key,
+                "content_type": parsed_request.dig('file', :type),
+                "filename": parsed_request.dig('file', :filename)
+              },
+              "meta": {
+                "cloud_provider": "azure"
+              },
+              "status": "accepted",
+              "uuid": SecureRandom.uuid
+            }.to_json
+        }
+      end
 
     end
   end
