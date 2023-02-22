@@ -3,8 +3,8 @@ module EtTestHelpers
   module Common
     extend ActiveSupport::Concern
 
-    def t(*args)
-      EtTestHelpers::Config.instance.translation.call(*args)
+    def t(*args, **kw_args)
+      EtTestHelpers::Config.instance.translation.call(*args, **kw_args)
     end
 
     class_methods do
@@ -20,7 +20,7 @@ module EtTestHelpers
         if scope.nil?
           klass
         else
-          wrapper_classname = "#{component_classname}Wrapper#{(Time.now.to_f * 1000000).to_i}"
+          wrapper_classname = "#{component_classname}Wrapper#{(Time.now.to_f * 1_000_000).to_i}"
           class_eval <<-CODE, __FILE__, __LINE__ + 1
             class ::EtTestHelpers::Components::#{wrapper_classname} < #{klass_name}
               cattr_accessor :govuk_component_args
@@ -53,7 +53,7 @@ module EtTestHelpers
       # - label - The visual label for the text input - which should be a label attached to the field in html
       # - hint - If specified, the text field should have a hint matching this text to be valid
       # - errors - An object containing the different errors that can be shown - matched using has_error?
-      DEFAULT_FIND_OPTIONS = {  }
+      DEFAULT_FIND_OPTIONS = {}
 
       def gds_text_input(name, specification, **kw_args, &block)
         section name,
@@ -152,7 +152,6 @@ module EtTestHelpers
                 **DEFAULT_FIND_OPTIONS.merge(kw_args),
                 &block
       end
-
 
       # See https://design-system.service.gov.uk/components/textarea/
       # Defines a section for a gds text area component whose specification matches that of the section of

@@ -26,7 +26,7 @@ module EtTestHelpers
         find(:govuk_field_error, text: error)
       end
 
-      delegate [:set, :value, :checked?, :disabled?] => :input
+      delegate %i[set value checked? disabled?] => :input
     end
   end
 end

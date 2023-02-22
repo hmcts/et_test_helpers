@@ -4,7 +4,6 @@ module EtTestHelpers
     # A gov.uk GDS standard date field representation for testing
     class GovUKDateField < ComponentBase
       section :fieldset, 'fieldset' do
-
         # @!method label
         # @return [Capybara::Node::Element] The label element
         element :label, 'fieldset > legend'
@@ -50,17 +49,15 @@ module EtTestHelpers
             inputs.each do |input|
               input.set('')
             end
+          elsif inputs.length == 3
+            inputs[0].set(date.day)
+            inputs[1].set(date.month)
+            inputs[2].set(date.year)
+          elsif inputs.length == 2
+            inputs[0].set(date.month)
+            inputs[1].set(date.year)
           else
-            if inputs.length == 3
-              inputs[0].set(date.day)
-              inputs[1].set(date.month)
-              inputs[2].set(date.year)
-            elsif inputs.length == 2
-              inputs[0].set(date.month)
-              inputs[1].set(date.year)
-            else
-              raise "A GDS date field must consist of 2 or 3 input elements but this had #{inputs.length}"
-            end
+            raise "A GDS date field must consist of 2 or 3 input elements but this had #{inputs.length}"
           end
         end
 
@@ -92,7 +89,8 @@ module EtTestHelpers
         end
       end
 
-      delegate %i[assert_value assert_error_message set value label hint error has_no_error? has_no_hint? disabled? has_hint? has_error? valid?] => :fieldset
+      delegate %i[assert_value assert_error_message set value label hint error has_no_error? has_no_hint? disabled?
+                  has_hint? has_error? valid?] => :fieldset
     end
   end
 end

@@ -41,11 +41,12 @@ module EtTestHelpers
 
       def remove_file
         return if filename_hidden_input.value.empty?
+
         remove_element.click
       end
 
       # @TODO migrate these
-      delegate [:value, :disabled?] => :input
+      delegate %i[value disabled?] => :input
     end
   end
 end

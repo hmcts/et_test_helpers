@@ -6,8 +6,10 @@ Capybara.add_selector(:govuk_file_dropzone_field) do
 
     # Helps with nicer error messages from rspec etc..
     @definition.label("GOVUK GDS File dropzone field container labelled <#{locator}>")
-    xpath = XPath.generate { |x| x.descendant(:div)[x.attr(:'data-module').equals('et-gds-design-system-dropzone-uploader') & x.attr(:class).contains_word('dropzone')] }
+    xpath = XPath.generate do |x|
+      x.descendant(:div)[x.attr(:'data-module').equals('et-gds-design-system-dropzone-uploader') & x.attr(:class).contains_word('dropzone')]
+    end
     field_xpath = locate_field(xpath, locator, **options)
-    XPath.generate {|x| x.css('.govuk-form-group')[field_xpath] }
+    XPath.generate { |x| x.css('.govuk-form-group')[field_xpath] }
   end
 end

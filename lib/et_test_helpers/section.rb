@@ -6,12 +6,11 @@ module EtTestHelpers
   module Section
     extend ActiveSupport::Concern
 
-    included do |args|
+    included do |_args|
       include Common
     end
 
     class_methods do
-
     end
   end
 end

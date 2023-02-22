@@ -5,15 +5,15 @@ module EtTestHelpers
       previous_value = Rails.application.routes.disable_clear_and_finalize
       Rails.application.routes.disable_clear_and_finalize = true
       Rails.application.routes.draw do
-        match "/dummy_endpoint_for_dropzone", to: -> (env) { [200, {}, ['']] }, via: :all
+        match '/dummy_endpoint_for_dropzone', to: ->(_env) { [200, {}, ['']] }, via: :all
       end
       Rails.application.routes.disable_clear_and_finalize = previous_value
 
       key = "direct_uploads/#{SecureRandom.uuid}".freeze
       base_url = Capybara.current_session.server.base_url
       WebMock.stub_request(:post, "#{ENV.fetch('ET_API_URL', 'http://api.et.127.0.0.1.nip.io:3100/api/v2')}/build_blob")
-        .to_return headers: { 'Content-Type': 'application/json' },
-                   body:
+             .to_return headers: { 'Content-Type': 'application/json' },
+                        body:
                      {
                        "data": {
                          "fields": {
@@ -28,21 +28,24 @@ module EtTestHelpers
                          "unsigned_url": 'http://jdshfjkshjkfjhadsfds'
                        },
                        "meta": {
-                         "cloud_provider": "azure"
+                         "cloud_provider": 'azure'
                        },
-                       "status": "accepted",
+                       "status": 'accepted',
                        "uuid": SecureRandom.uuid
                      }.to_json
-
     end
+
     def self.stub_build_blob_to_azure_teardown
       Rails.application.reload_routes!
     end
+
     def self.stub_create_blob_to_azure_setup
       key = "direct_uploads/#{SecureRandom.uuid}".freeze
       WebMock.stub_request(:post, "#{ENV.fetch('ET_API_URL', 'http://api.et.127.0.0.1.nip.io:3100/api/v2')}/create_blob")
-      .to_return do |request|
-        env = request.headers.transform_keys { |key| key.underscore.upcase }.merge('rack.input' => StringIO.new(request.body))
+             .to_return do |request|
+        env = request.headers.transform_keys do |key|
+          key.underscore.upcase
+        end.merge('rack.input' => StringIO.new(request.body))
         parsed_request = Rack::Multipart.parse_multipart(env)
         {
           headers: { 'Content-Type': 'application/json' },
@@ -54,14 +57,13 @@ module EtTestHelpers
                 "filename": parsed_request.dig('file', :filename)
               },
               "meta": {
-                "cloud_provider": "azure"
+                "cloud_provider": 'azure'
               },
-              "status": "accepted",
+              "status": 'accepted',
               "uuid": SecureRandom.uuid
             }.to_json
         }
       end
-
     end
   end
 end

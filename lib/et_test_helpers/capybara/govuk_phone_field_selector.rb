@@ -5,9 +5,11 @@ Capybara.add_selector(:govuk_phone_field) do
     locator = locator[:label] if locator.is_a?(Hash)
     # Helps with nicer error messages from rspec etc..
     @definition.label("GOVUK GDS Phone field container labelled <#{locator}>")
-    xpath = XPath.generate { |x| x.descendant(:input)[x.attr(:type).equals('tel') & x.attr(:class).contains_word('govuk-input')] }
+    xpath = XPath.generate do |x|
+      x.descendant(:input)[x.attr(:type).equals('tel') & x.attr(:class).contains_word('govuk-input')]
+    end
     field_xpath = locate_field(xpath, locator, **options)
-    XPath.generate {|x| x.css('.govuk-form-group')[field_xpath] }
+    XPath.generate { |x| x.css('.govuk-form-group')[field_xpath] }
   end
 
   node_filter(:with) do |node, with|

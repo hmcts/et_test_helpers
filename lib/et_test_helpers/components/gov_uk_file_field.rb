@@ -30,7 +30,7 @@ module EtTestHelpers
         input with: value
       end
 
-      delegate [:set, :value, :disabled?] => :input
+      delegate %i[set value disabled?] => :input
     end
   end
 end

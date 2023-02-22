@@ -8,6 +8,6 @@ Capybara.add_selector(:govuk_collection_select) do
     @definition.label("GOVUK GDS Collection select container labelled <#{locator}>")
     xpath = XPath.generate { |x| x.descendant(:select)[x.attr(:class).contains_word('govuk-select')] }
     field_xpath = locate_field(xpath, locator, **options)
-    XPath.generate {|x| x.css('.govuk-form-group')[field_xpath] }
+    XPath.generate { |x| x.css('.govuk-form-group')[field_xpath] }
   end
 end

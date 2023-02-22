@@ -7,6 +7,6 @@ Capybara.add_selector(:govuk_text_area) do
     @definition.label("GOVUK GDS Text area container labelled <#{locator}>")
     xpath = XPath.generate { |x| x.descendant(:textarea)[x.attr(:class).contains_word('govuk-textarea')] }
     field_xpath = locate_field(xpath, locator, **options)
-    XPath.generate {|x| x.css('.govuk-form-group')[field_xpath] }
+    XPath.generate { |x| x.css('.govuk-form-group')[field_xpath] }
   end
 end

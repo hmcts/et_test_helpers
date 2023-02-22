@@ -1,7 +1,9 @@
 Capybara.add_selector(:govuk_phone_input) do
   label 'GOVUK GDS phone input'
   xpath do
-    XPath.generate { |x| x.descendant(:input)[x.attr(:class).contains_word('govuk-input') & x.attr(:type).equals('tel')] }
+    XPath.generate do |x|
+      x.descendant(:input)[x.attr(:class).contains_word('govuk-input') & x.attr(:type).equals('tel')]
+    end
   end
 
   node_filter(:with) do |node, with|

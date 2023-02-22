@@ -7,7 +7,7 @@ module EtTestHelpers
     private
 
     def initialize
-      self.translation = ->(key) {
+      self.translation = lambda { |key|
         I18n.t(key)
       }
     end

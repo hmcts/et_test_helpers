@@ -51,10 +51,7 @@ module EtTestHelpers
               "#{inspect} Expected valid hint, but there wasn't one with the text '#{EtTestHelpers.normalize_locator(root_scope[:hint])}' (:'#{root_scope[:hint]}')"
       end
 
-
-      delegate [:set, :value, :disabled?] => :input
-
-      private
+      delegate %i[set value disabled?] => :input
 
       element :character_count_message, '.govuk-character-count__message.govuk-error-message'
     end

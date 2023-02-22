@@ -71,10 +71,10 @@ module EtTestHelpers
 
             missing << "#{::EtTestHelpers.normalize_locator(option)} (:#{option})"
           end
-          unless missing.empty?
-            raise Capybara::ExpectationNotMet,
-                  "#{inspect} Expected valid options, but the following are missing :- #{missing}"
-          end
+          return if missing.empty?
+
+          raise Capybara::ExpectationNotMet,
+                "#{inspect} Expected valid options, but the following are missing :- #{missing}"
         end
 
         def assert_valid_hint

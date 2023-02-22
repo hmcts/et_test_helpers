@@ -5,8 +5,10 @@ Capybara.add_selector(:govuk_checkbox) do
     locator = locator[:label] if locator.is_a?(Hash)
     # Helps with nicer error messages from rspec etc..
     @definition.label("GOVUK GDS checkbox container labelled <#{locator}>")
-    xpath = XPath.generate { |x| x.child(:input)[x.attr(:type).equals('checkbox') & x.attr(:class).contains_word('govuk-checkboxes__input')] }
+    xpath = XPath.generate do |x|
+      x.child(:input)[x.attr(:type).equals('checkbox') & x.attr(:class).contains_word('govuk-checkboxes__input')]
+    end
     field_xpath = locate_field(xpath, locator, **options)
-    XPath.generate {|x| x.css('.govuk-checkboxes__item')[field_xpath] }
+    XPath.generate { |x| x.css('.govuk-checkboxes__item')[field_xpath] }
   end
 end

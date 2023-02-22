@@ -11,7 +11,7 @@ Capybara.add_selector(:govuk_field_select) do
     end
   end
 
-  describe_node_filters do |**options|
+  describe_node_filters do |**_options|
     " with #{selected.inspect} selected" if selected
   end
 

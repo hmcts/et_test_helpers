@@ -1,6 +1,6 @@
 Capybara.add_selector(:govuk_details) do
   label 'GOVUK GDS details labelled'
-  xpath do |locator, translation_options: {}, **options|
+  xpath do |locator, translation_options: {}, **_options|
     locator = ::EtTestHelpers.normalize_locator(locator, translation_options: translation_options)
     locator = locator[:label] if locator.is_a?(Hash)
 

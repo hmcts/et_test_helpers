@@ -6,7 +6,7 @@ module EtTestHelpers
         root_element.click
       end
 
-      alias :click :submit
+      alias click submit
       delegate %i[disabled?] => :root_element
     end
   end
