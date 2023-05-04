@@ -1,4 +1,5 @@
 require 'capybara/rspec'
+require 'webmock'
 module EtTestHelpers
   module RSpec
     def self.stub_build_blob_to_azure_setup
@@ -61,9 +62,38 @@ module EtTestHelpers
               },
               "status": 'accepted',
               "uuid": SecureRandom.uuid
-            }.to_json
+            }.to_json,
+          status: 200
         }
       end
+    end
+
+    def self.stub_create_blob_to_azure_failure(response: nil)
+      uuid = SecureRandom.uuid
+      response ||= {
+        headers: { 'Content-Type': 'application/json' },
+          body:
+            {
+              "errors": [
+                {
+                  status: 422,
+                  code: 'unprocessible_entity',
+                  title: 'The uploaded file is invalid in some way',
+                  detail: 'The uploaded file is invalid in some way',
+                  options: {},
+                  source: '/file',
+                  command: 'CreateBlob',
+                  uuid: uuid
+                }
+              ],
+              "status": 'not_accepted',
+              "uuid": uuid
+            }.to_json,
+          status: 422
+      }
+      WebMock.stub_request(:post, "#{ENV.fetch('ET_API_URL', 'http://api.et.127.0.0.1.nip.io:3100/api/v2')}/create_blob")
+             .to_return response
+
     end
   end
 end

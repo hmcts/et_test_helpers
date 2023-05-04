@@ -16,6 +16,12 @@ module EtTestHelpers
 
       element :remove_element, '*[data-dz-remove]'
 
+      element :input, :field, type: :file, visible: false, disabled: true
+
+      element :filename, 'span[data-dz-name]'
+
+      element :upload_error_message, 'span[data-dz-errormessage]'
+
       # @!method error
       # @return [::SitePrism::Section] The label section - note that all errors have a hidden (1px x 1px prefix containing 'Error:' - this section filters that out)
       section :error, :govuk_field_error do
@@ -26,10 +32,17 @@ module EtTestHelpers
 
       def assert_error_message(error)
         find(:govuk_field_error, text: error)
+        true
+      end
+
+      def assert_upload_error_message(error)
+        upload_error_message text: error
+        true
       end
 
       def assert_value(value)
-        input with: value
+        filename(text: File.basename(value))
+        true
       end
 
       def set(value)
