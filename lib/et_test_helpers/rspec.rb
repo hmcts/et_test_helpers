@@ -95,6 +95,26 @@ module EtTestHelpers
              .to_return response
 
     end
+
+    def self.stub_create_blob_to_azure_html_failure(response: nil)
+      uuid = SecureRandom.uuid
+      html = <<-HTML
+        <html>
+          <body>
+            <h1>Internal server error</h1>
+            <p>Somethign went really really bad</p>
+          </body>
+        </html>
+      HTML
+      response ||= {
+        headers: { 'Content-Type': 'text/html' },
+        body: html,
+        status: 500
+      }
+      WebMock.stub_request(:post, "#{ENV.fetch('ET_API_URL', 'http://api.et.127.0.0.1.nip.io:3100/api/v2')}/create_blob")
+             .to_return response
+
+    end
   end
 end
 RSpec.configure do |config|
