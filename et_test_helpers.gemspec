@@ -30,6 +30,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'capybara', '~> 3'
   spec.add_dependency 'i18n', '~> 1.8'
   spec.add_dependency 'rspec', '>= 3.0'
-  spec.add_dependency 'site_prism', '~> 3.5'
+  spec.add_dependency 'site_prism', '>= 3.5'
   spec.add_dependency 'webmock'
 end
