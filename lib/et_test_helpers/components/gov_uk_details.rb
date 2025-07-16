@@ -13,7 +13,7 @@ module EtTestHelpers
       private
 
       def open?
-        root_element[:open] == 'true'
+        root_element[:open] == 'true' || root_element[:open] == true
       end
 
       def toggle
