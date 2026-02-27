@@ -1,4 +1,4 @@
-require_relative './component_base'
+require_relative 'component_base'
 module EtTestHelpers
   module Components
     # A gov.uk GDS standard date field representation for testing
@@ -20,7 +20,7 @@ module EtTestHelpers
         # @return [::SitePrism::Section] The label section - note that all errors have a hidden (1px x 1px prefix containing 'Error:' - this section filters that out)
         section :error, :govuk_field_error do
           def text
-            root_element.text.gsub(/Error:\n/, '')
+            root_element.text.gsub("Error:\n", '')
           end
         end
 
@@ -37,6 +37,10 @@ module EtTestHelpers
                  expected_value
                end
           raise Capybara::ExpectationNotMet unless dt == value
+        end
+
+        def assert_raw_value(expected_value)
+          raise Capybara::ExpectationNotMet unless raw_value == expected_value
         end
 
         def set(date)
@@ -68,6 +72,10 @@ module EtTestHelpers
           nil
         end
 
+        def raw_value
+          inputs[0..2].map(&:value).join('/')
+        end
+
         def disabled?
           inputs.all?(&:disabled?)
         end
@@ -89,8 +97,8 @@ module EtTestHelpers
         end
       end
 
-      delegate %i[assert_value assert_error_message set value label hint error has_no_error? has_no_hint? disabled?
-                  has_hint? has_error? valid?] => :fieldset
+      delegate [:assert_value, :assert_error_message, :set, :value, :label, :hint, :error, :has_no_error?,
+                :has_no_hint?, :disabled?, :has_hint?, :has_error?, :valid?] => :fieldset
     end
   end
 end
