@@ -97,7 +97,7 @@ module EtTestHelpers
         end
       end
 
-      delegate [:assert_value, :assert_error_message, :set, :value, :label, :hint, :error, :has_no_error?,
+      delegate [:assert_value, :assert_raw_value, :assert_error_message, :set, :value, :raw_value, :label, :hint, :error, :has_no_error?,
                 :has_no_hint?, :disabled?, :has_hint?, :has_error?, :valid?] => :fieldset
     end
   end
